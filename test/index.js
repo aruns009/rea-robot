@@ -69,3 +69,19 @@ describe('Test Suite 2 - Method "place" of Robot Controller', () => {
         expect(robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction)).to.equal(config.messages.invalidDirections);
     });
 });
+
+describe('Test Suite 3 - Method "report" of Robot Controller', () => {
+    it('Unit Test 1 - invoke report without a place invocation', () => {
+        robotController.robot.placedRobot = false;
+        expect(robotController.robot.report()).to.eql(config.messages.noPlaceInvoked);
+    });
+    it('Unit Test 2 - invoke report() after a "place" comment', () => {
+        var testData = {
+            xAxis: 0,
+            yAxis: 1,
+            direction: "SOUTH"
+        };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + testData.xAxis + ', ' + testData.yAxis + ', ' + testData.direction);
+    });
+});

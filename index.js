@@ -49,7 +49,7 @@ var performAction = function (inputCommand) {
 var sendOutput = function(data) {
     var inputData = data.trim();
 
-    if (inputData.match(/(quit|exit)/i)){
+    if (inputData.match(/(q|quit|exit)/i)){
         process.exit();
     }
     var response = performAction(inputData);
