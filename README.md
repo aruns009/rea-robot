@@ -23,7 +23,14 @@ Change into the cloned directory :
 ```
 cd rea-robot
 ```
+## Pre-requsites 
 
-Run the application:
+1. Your machine should have [NodeJS installed](https://nodejs.org/en/download/)
+2. You should have [npm package manager](https://www.npmjs.com/get-npm) 
 
-1. Run `npm start`
+Once you have installed all the dependencies, you are ready to run the application.
+
+## Run the application:
+
+1. Run `npm install`
+2. Run `npm start`
