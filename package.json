@@ -1,0 +1,20 @@
+{
+  "name": "rea-robot",
+  "version": "1.0.0",
+  "description": "The application is a simulation of a toy robot moving on a square tabletop of dimensions 5 units x 5 units",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aruns009/rea-robot.git"
+  },
+  "author": "Arun Surendran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aruns009/rea-robot/issues"
+  },
+  "homepage": "https://github.com/aruns009/rea-robot#readme"
+}
