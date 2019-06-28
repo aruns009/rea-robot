@@ -75,8 +75,81 @@ REA Robot's position is at: 0, 0, NORTH
 - **RIGHT** - This command will change the orientation of the robot to its right from its current direction.
 - **REPORT** - This command prints the current status of the robot with its co-ordinates and direction.
 
+## Run the application via file
+Run the below command to execute the commands via a file. This file should contain the commands for the robot.
+
+```
+`npm start test/test-file.txt`
+```
+
+Running the above command will execute all the comands in the file. Below is a sample operation
+
+```
+npm start test/test-file.txt
+
+Welcome to REA robot! 
+Enter "PLACE X, Y, NORTH | SOUTH | EAST | WEST" command to place the robot on the table. If you want to quit, please enter "q | quit | exit"
+> PLACE 0,0,NORTH 
+> MOVE 
+> LEFT
+> REPORT 
+REA Robot's position is at: 0, 1, WEST
+
+```
+
 ## Run the unit test.
 Inorder to run the unit test, running the below comand will show you the report of the text execution and summary.
 ```
 `npm test`
+```
+Below is the sample summary for the test executions.
+
+```
+  Test Suite 1 - Initialization of Robot Controller
+    ✓ Unit Test 1 - initial robot position is undefined
+    ✓ Unit Test 2 - defaults values for the table is correct
+    ✓ Unit Test 3 - defaults action for the robot should be correct
+    ✓ Unit Test 4 - defaults directions for the robot should be correct
+    ✓ Unit Test 5 - initial value for "placedRobot" in table is false
+
+  Test Suite 2 - Method "place" of Robot Controller
+    ✓ Unit Test 1 - store the co-ordinates for the place() action
+    ✓ Unit Test 2 - pass co-ordinates for X and Y axis beyond the table
+    ✓ Unit Test 3 - pass invalid co-ordinates for X and Y axis 
+    ✓ Unit Test 4 - pass invalid direction for place() function 
+
+  Test Suite 3 - Method "report" of Robot Controller
+    ✓ Unit Test 1 - invoke report without a place invocation
+    ✓ Unit Test 2 - invoke report() after a "place" comment
+
+  Test Suite 4 - Method "move" of Robot Controller
+    ✓ Unit Test 1 - invoke move command after setting a place command
+    ✓ Unit Test 2 - throw message if the "move" command is at the edge of table
+    ✓ Unit Test 3 - throw message if the "move" command is invoked without "place" command
+
+  Test Suite 5 - Method "left" of Robot Controller
+    ✓ Unit Test 1 - invoke "left" command after setting a place command
+    ✓ Unit Test 2 - throw message if the "left" command is invoked without "place" command
+
+  Test Suite 6 - Method "right" of Robot Controller
+    ✓ Unit Test 1 - invoke "right" command after setting a place command
+    ✓ Unit Test 2 - throw message if the "right" command is invoked without "place" command
+
+  Test Suite 7 - E2E functional scenarios
+    ✓ Functional Test 1 - 
+         PLACE 0, 1, EAST 
+         MOVE 
+         LEFT 
+         MOVE 
+         RIGHT 
+         REPORT
+    ✓ Functional Test 2 - 
+         PLACE 3, 0, NORTH 
+         MOVE 
+         MOVE 
+         LEFT 
+         MOVE 
+         REPORT
+
+  20 passing (11ms)
 ```
