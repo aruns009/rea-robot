@@ -1,6 +1,7 @@
+//this is the entry point file for the application
 const readline = require('readline');
 var os = require("os");
-var robotController = require("./src/controllers/RobotController");
+var robotController = require("./src/controllers/RobotController"); //import the robot controller
 var robotApp = {};
 //process settings
 process.title = "REA robot";
@@ -17,6 +18,8 @@ stdin.on('data', function(data) {
     sendOutput(data);
 });
 
+//perform the action based on the user input. 
+//This function will invoke the respective method in RobotController based on the user command
 var performAction = function (inputCommand) {
     var response = null;
     try{
@@ -46,6 +49,7 @@ var performAction = function (inputCommand) {
     }
     return response;
 }
+//this function will send the output to the user in the commandline after the action is performed.
 var sendOutput = function(data) {
     var inputData = data.trim();
 
@@ -62,6 +66,7 @@ var sendOutput = function(data) {
     }
 };
 
+//this function is invoked to start the application
 robotApp.execute = function() {
     stdout.write(robotController.message.welcome + os.EOL + '> ');
     stdin.resume();

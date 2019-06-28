@@ -1,5 +1,5 @@
 var defaults = {};
-
+// this file contains all the default values used for the application
 //table measurements
 defaults.table = {
     minlength: 0,
@@ -11,7 +11,14 @@ defaults.table = {
 //commands permitted
 defaults.commands = {
     actions: ["PLACE", "MOVE", "REPORT", "LEFT", "RIGHT"],
-    directions: ['NORTH', 'SOUTH', 'EAST', 'WEST']
+    directions: ['NORTH', 'SOUTH', 'EAST', 'WEST'],
+    directionMapping: {
+        "NORTH": "WEST",
+        "WEST": "SOUTH",
+        "SOUTH": "EAST",
+        "EAST": "NORTH",
+    }
+
 };
 
 module.exports = defaults;

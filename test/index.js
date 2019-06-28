@@ -3,6 +3,8 @@ var expect = chai.expect;
 var robotController = require("../src/controllers/RobotController");
 var config = require("../src/config/config");
 
+//The below test suites will cover the methods created under the robot controller and also the default values set for the application.
+
 describe('Test Suite 1 - Initialization of Robot Controller', () => {
     it('Unit Test 1 - initial robot position is undefined', () => {
         var currentPosition = robotController.robot.currentRobotPosition;
@@ -83,5 +85,88 @@ describe('Test Suite 3 - Method "report" of Robot Controller', () => {
         };
         robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
         expect(robotController.robot.report()).to.equal(config.messages.robotPosition + testData.xAxis + ', ' + testData.yAxis + ', ' + testData.direction);
+    });
+});
+
+describe('Test Suite 4 - Method "move" of Robot Controller', () => {
+    it('Unit Test 1 - invoke move command after setting a place command', () => {
+        var testData = { xAxis: 0, yAxis: 1, direction: "EAST" };
+        var expectedResult = { xAxis: 1, yAxis: 1, direction: "EAST" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        robotController.robot.move();
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + expectedResult.xAxis + ', ' + expectedResult.yAxis + ', ' + expectedResult.direction);
+    });
+    it('Unit Test 2 - throw message if the "move" command is at the edge of table', () => {
+        var testData = { xAxis: 4, yAxis: 1, direction: "EAST" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        expect( robotController.robot.move()).to.eql(config.messages.edgeLocation);
+    });
+    it('Unit Test 3 - throw message if the "move" command is invoked without "place" command', () => {
+        robotController.robot.placedRobot = false;
+        var testData = { xAxis: 4, yAxis: 1, direction: "EAST" };
+        expect( robotController.robot.move()).to.eql(config.messages.noPlaceInvoked);
+    });
+});
+
+describe('Test Suite 5 - Method "left" of Robot Controller', () => {
+    it('Unit Test 1 - invoke "left" command after setting a place command', () => {
+        var testData = { xAxis: 0, yAxis: 1, direction: "EAST" };
+        var expectedResult = { xAxis: 0, yAxis: 1, direction: "NORTH" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        robotController.robot.left();
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + expectedResult.xAxis + ', ' + expectedResult.yAxis + ', ' + expectedResult.direction);
+    });
+    it('Unit Test 2 - throw message if the "left" command is invoked without "place" command', () => {
+        robotController.robot.placedRobot = false;
+        expect( robotController.robot.left()).to.eql(config.messages.noPlaceInvoked);
+    });
+});
+
+describe('Test Suite 6 - Method "right" of Robot Controller', () => {
+    it('Unit Test 1 - invoke "right" command after setting a place command', () => {
+        var testData = { xAxis: 0, yAxis: 1, direction: "EAST" };
+        var expectedResult = { xAxis: 0, yAxis: 1, direction: "SOUTH" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        robotController.robot.right();
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + expectedResult.xAxis + ', ' + expectedResult.yAxis + ', ' + expectedResult.direction);
+    });
+    it('Unit Test 2 - throw message if the "right" command is invoked without "place" command', () => {
+        robotController.robot.placedRobot = false;
+        expect( robotController.robot.right()).to.eql(config.messages.noPlaceInvoked);
+    });
+});
+
+describe('Test Suite 7 - E2E functional scenarios', () => {
+    it('Functional Test 1 - \n \
+        PLACE 0, 1, EAST \n \
+        MOVE \n \
+        LEFT \n \
+        MOVE \n \
+        RIGHT \n \
+        REPORT', () => {
+        var testData = { xAxis: 0, yAxis: 1, direction: "EAST" };
+        var expectedResult = { xAxis: 1, yAxis: 2, direction: "EAST" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        robotController.robot.move();
+        robotController.robot.left();
+        robotController.robot.move();
+        robotController.robot.right();
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + expectedResult.xAxis + ', ' + expectedResult.yAxis + ', ' + expectedResult.direction);
+    });
+    it('Functional Test 2 - \n \
+        PLACE 3, 0, NORTH \n \
+        MOVE \n \
+        MOVE \n \
+        LEFT \n \
+        MOVE \n \
+        REPORT', () => {
+        var testData = { xAxis: 3, yAxis: 0, direction: "NORTH" };
+        var expectedResult = { xAxis: 2, yAxis: 2, direction: "WEST" };
+        robotController.robot.place(testData.xAxis, testData.yAxis, testData.direction);
+        robotController.robot.move();
+        robotController.robot.move();
+        robotController.robot.left();
+        robotController.robot.move();
+        expect(robotController.robot.report()).to.equal(config.messages.robotPosition + expectedResult.xAxis + ', ' + expectedResult.yAxis + ', ' + expectedResult.direction);
     });
 });
